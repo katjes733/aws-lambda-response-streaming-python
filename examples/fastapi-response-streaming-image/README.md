@@ -40,7 +40,7 @@ sam build --use-container
 sam deploy
 ```
 
-**NOTE 3:** When running `sam deploy --guided`, it will ask you if it is OK to have the lambda deploy without authorization. Confirm this with `y`, but be aware that this the Lambda URL will be public and can theoretically be invoked by anyone. Ue caution!
+**NOTE 3:** When running `sam deploy --guided`, it will ask you if it is OK to have the lambda deploy without authorization. Confirm this with `y`, but be aware that this the Lambda URL will be public and can theoretically be invoked by anyone. Use caution!
 
 ## Test the example
 
