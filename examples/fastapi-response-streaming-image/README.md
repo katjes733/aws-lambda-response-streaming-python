@@ -30,7 +30,7 @@ sam deploy --guided --profile <PROFILE>
 Alternatively, you can set the following in your terminal:
 
 ```bash
-export AWS_PROFILE=PROFILE>
+export AWS_PROFILE=<PROFILE>
 ```
 
 **NOTE 2:** When running `sam deploy --guided`, it is highly recommended opting for saving the settings, as subsequent deployment will be simplified by just running `sam deploy`. Remember to always build before to apply any changes:

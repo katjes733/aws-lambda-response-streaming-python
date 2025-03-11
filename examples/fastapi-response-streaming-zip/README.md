@@ -13,7 +13,7 @@ By default, we use `arm64` for our function architecture using the following lay
 
 - `arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerArm64:24`
 
-Alternatively, if we wish to use `x86_64` as out function architecture, we would have to use the folowing layer:
+Alternatively, if we wish to use `x86_64` as out function architecture, we would have to use the following layer:
 
 - `arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerArm64:24`
 
@@ -41,7 +41,7 @@ sam deploy --guided --profile <PROFILE>
 Alternatively, you can set the following in your terminal:
 
 ```bash
-export AWS_PROFILE=PROFILE>
+export AWS_PROFILE=<PROFILE>
 ```
 
 **NOTE 2:** When running `sam deploy --guided`, it is highly recommended opting for saving the settings, as subsequent deployment will be simplified by just running `sam deploy`. Remember to always build before to apply any changes:
