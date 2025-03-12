@@ -1,12 +1,32 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   fastapi response streaming
 
+Parameters:
+  LogLevel:
+    Type: String
+    Default: INFO
+    AllowedValues:
+      - INFO
+      - DEBUG
+      - WARN
+      - ERROR
+    Description: The Log Level for the FastAPI Lambda Function
+
+  OwnerTag:
+    Type: String
+    Description: The value of the owner tag (typically your personal email)
+
+  ProjectTag:
+    Type: String
+    Default: lambda-response-streaming
+    Description: The value of the project tag (typically the name of the project)
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 60
+    Timeout: 300
 
 Resources:
   FastAPIFunction:
@@ -15,7 +35,7 @@ Resources:
       CodeUri: app/
       Handler: run.sh
       Runtime: python3.12
-      MemorySize: 512
+      MemorySize: 256
       Architectures:
         - arm64
       Environment:
@@ -23,22 +43,23 @@ Resources:
           AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
           AWS_LWA_INVOKE_MODE: RESPONSE_STREAM
           PORT: 8000
+          LOG_LEVEL: !Ref LogLevel
       Layers:
         - !Sub arn:aws:lambda:${AWS::Region}:753240598075:layer:LambdaAdapterLayerArm64:24
       FunctionUrlConfig:
         AuthType: NONE
         InvokeMode: RESPONSE_STREAM
       Policies:
-      - Statement:
-        - Sid: BedrockInvokePolicy
-          Effect: Allow
-          Action:
-          - bedrock:InvokeModelWithResponseStream
-          Resource: '*'
+        - Statement:
+            - Sid: BedrockInvokePolicy
+              Effect: Allow
+              Action:
+                - bedrock:InvokeModelWithResponseStream
+              Resource: "*"
       Tracing: Active
       Tags:
-        Owner: martin.macecek@rearc.io
-        Project: lambda-response-streaming
+        Owner: !Ref OwnerTag
+        Project: !Ref ProjectTag
 
 Outputs:
   FastAPIFunctionUrl:

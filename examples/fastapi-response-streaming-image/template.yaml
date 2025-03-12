@@ -1,7 +1,27 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   Streaming Bedrock Response with FastAPI on AWS Lambda
+
+Parameters:
+  LogLevel:
+    Type: String
+    Default: INFO
+    AllowedValues:
+      - INFO
+      - DEBUG
+      - WARN
+      - ERROR
+    Description: The Log Level for the FastAPI Lambda Function
+
+  OwnerTag:
+    Type: String
+    Description: The value of the owner tag (typically your personal email)
+
+  ProjectTag:
+    Type: String
+    Default: lambda-response-streaming
+    Description: The value of the project tag (typically the name of the project)
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -13,26 +33,27 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       PackageType: Image
-      MemorySize: 512
+      MemorySize: 256
       Architectures:
         - x86_64
       Environment:
         Variables:
           AWS_LWA_INVOKE_MODE: RESPONSE_STREAM
+          LOG_LEVEL: !Ref LogLevel
       FunctionUrlConfig:
         AuthType: NONE
         InvokeMode: RESPONSE_STREAM
       Policies:
-      - Statement:
-        - Sid: BedrockInvokePolicy
-          Effect: Allow
-          Action:
-          - bedrock:InvokeModelWithResponseStream
-          Resource: '*'
+        - Statement:
+            - Sid: BedrockInvokePolicy
+              Effect: Allow
+              Action:
+                - bedrock:InvokeModelWithResponseStream
+              Resource: "*"
       Tracing: Active
       Tags:
-        Owner: martin.macecek@rearc.io
-        Project: lambda-response-streaming
+        Owner: !Ref OwnerTag
+        Project: !Ref ProjectTag
     Metadata:
       Dockerfile: Dockerfile
       DockerContext: ./app
