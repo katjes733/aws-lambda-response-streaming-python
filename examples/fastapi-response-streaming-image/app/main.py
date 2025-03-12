@@ -65,6 +65,7 @@ async def bedrock_stream(topic: str):
     Always end with "The End".
     Always be polite and friendly.
     Never add any copyright related information to your answer.
+    Do not ask for feedback and do not ask for further requests.
     """
     body = json.dumps({
         "anthropic_version": "bedrock-2023-05-31",
