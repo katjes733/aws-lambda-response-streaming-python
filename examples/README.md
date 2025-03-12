@@ -15,7 +15,7 @@ There are multiple approaches as to how this can be implemented:
 - Docker Image
 - Zip file
 
-We will demonstrate both approaches with simple examples that are functionally identical.
+We will demonstrate both approaches with a simple examples that are functionally identical.
 
 ## Build & Deploy
 
